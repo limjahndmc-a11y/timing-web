@@ -5,8 +5,8 @@ use rusqlite::{params, Connection};
 use uuid::Uuid;
 
 use crate::models::{
-    BootstrapData, Category, DashboardStats, NewEntryInput, NewProjectInput, Project, TimeEntry,
-    TrackerStatus, TrendPoint, UpdateEntryInput, UpdateProjectInput,
+    BootstrapData, Category, DashboardStats, DeleteProjectInput, NewEntryInput, NewProjectInput,
+    Project, TimeEntry, TrackerStatus, TrendPoint, UpdateEntryInput, UpdateProjectInput,
 };
 
 #[derive(Clone)]
@@ -214,6 +214,22 @@ impl Database {
         conn.execute(
             "UPDATE projects SET name=?1,category_id=?2,color=?3,hourly_rate=?4 WHERE id=?5",
             params![input.name, input.category_id, input.color, input.hourly_rate, input.id],
+        )
+        .map_err(|e| e.to_string())?;
+        Ok(())
+    }
+
+    pub fn delete_project(&self, input: DeleteProjectInput) -> Result<(), String> {
+        let conn = self.connection()?;
+        // Delete associated time entries first to avoid orphaned records
+        conn.execute(
+            "DELETE FROM time_entries WHERE project_id = ?1",
+            params![input.id],
+        )
+        .map_err(|e| e.to_string())?;
+        conn.execute(
+            "DELETE FROM projects WHERE id = ?1",
+            params![input.id],
         )
         .map_err(|e| e.to_string())?;
         Ok(())

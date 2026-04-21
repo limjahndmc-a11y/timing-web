@@ -110,6 +110,12 @@ export async function updateProject(project: Project): Promise<void> {
   });
 }
 
+export async function deleteProject(projectId: string): Promise<void> {
+  await invoke("delete_project", {
+    input: { id: projectId },
+  });
+}
+
 export async function createEntry(input: {
   title: string;
   projectId: string;

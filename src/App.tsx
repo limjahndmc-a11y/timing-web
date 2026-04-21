@@ -9,7 +9,7 @@ import { formatInTimeZone } from "date-fns-tz";
 import { differenceInSeconds } from "date-fns";
 import { TimeEntry, Project, Category, TrackerStatus } from "./types";
 import { Settings } from "./components/Settings";
-import { createEntry, createProject, getBootstrapData, getDashboardStats, getTrend7Days, onTrackerActivityUpdated, updateEntry, updateProject, type DashboardStats, type TrendPoint } from "./lib/tauriApi";
+import { createEntry, createProject, deleteProject, getBootstrapData, getDashboardStats, getTrend7Days, onTrackerActivityUpdated, updateEntry, updateProject, type DashboardStats, type TrendPoint } from "./lib/tauriApi";
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState("dashboard");
@@ -64,6 +64,19 @@ export default function App() {
     }
     
     setIsProjectModalOpen(false);
+  };
+
+  // Delete Project State
+  const [deletingProject, setDeletingProject] = useState<Project | null>(null);
+
+  const handleOpenDeleteProject = (project: Project) => {
+    setDeletingProject(project);
+  };
+
+  const handleConfirmDeleteProject = () => {
+    if (!deletingProject) return;
+    deleteProject(deletingProject.id).then(refreshData);
+    setDeletingProject(null);
   };
 
   const handleDropEntryOnProject = (entryId: string, projectId: string) => {
@@ -268,6 +281,7 @@ export default function App() {
         categories={categories}
         onAddProject={handleOpenCreateProject}
         onEditProject={handleOpenEditProject}
+        onDeleteProject={handleOpenDeleteProject}
         onDropEntry={handleDropEntryOnProject}
         trackerStatus={trackerStatus}
       />
@@ -716,6 +730,53 @@ export default function App() {
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:hover:bg-blue-600 text-white rounded-md text-sm font-medium transition-colors"
               >
                 Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Project Confirmation Modal */}
+      {deletingProject && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-[#151921] border border-[#252A34] rounded-xl w-full max-w-sm overflow-hidden shadow-2xl">
+            <div className="flex items-center justify-between p-4 border-b border-[#252A34]">
+              <h3 className="font-bold text-[#E2E8F0]">Delete Project</h3>
+              <button onClick={() => setDeletingProject(null)} className="text-[#94A3B8] hover:text-white transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-5">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+                    <line x1="10" y1="11" x2="10" y2="17" />
+                    <line x1="14" y1="11" x2="14" y2="17" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm text-[#E2E8F0] font-medium">
+                    Are you sure you want to delete <strong>{deletingProject.name}</strong>?
+                  </p>
+                  <p className="text-xs text-slate-500 mt-1">
+                    All time entries associated with this project will also be permanently deleted.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="p-4 flex justify-end gap-3 bg-[#0B0E14] border-t border-[#252A34]">
+              <button 
+                onClick={() => setDeletingProject(null)}
+                className="px-4 py-2 text-sm font-medium text-[#94A3B8] hover:text-white transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleConfirmDeleteProject}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium transition-colors"
+              >
+                Delete Project
               </button>
             </div>
           </div>

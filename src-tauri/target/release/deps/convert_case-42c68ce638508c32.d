@@ -1,0 +1,9 @@
+C:\Users\DHPI DMC 92\Downloads\timing-web\src-tauri\target\release\deps\convert_case-42c68ce638508c32.d: C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\lib.rs C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\case.rs C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\words.rs
+
+C:\Users\DHPI DMC 92\Downloads\timing-web\src-tauri\target\release\deps\libconvert_case-42c68ce638508c32.rlib: C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\lib.rs C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\case.rs C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\words.rs
+
+C:\Users\DHPI DMC 92\Downloads\timing-web\src-tauri\target\release\deps\libconvert_case-42c68ce638508c32.rmeta: C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\lib.rs C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\case.rs C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\words.rs
+
+C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\lib.rs:
+C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\case.rs:
+C:\Users\DHPI\ DMC\ 92\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\convert_case-0.4.0\src\words.rs:

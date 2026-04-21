@@ -92,3 +92,8 @@ pub struct UpdateProjectInput {
     pub color: String,
     pub hourly_rate: f64,
 }
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct DeleteProjectInput {
+    pub id: String,
+}

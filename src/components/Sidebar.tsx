@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { TimeEntry, Project, Category, TrackerStatus } from "../types";
-import { Activity, LayoutDashboard, Calendar, PieChart, Settings, Info, Edit2 } from "lucide-react";
+import { Activity, LayoutDashboard, Calendar, PieChart, Settings, Info, Edit2, Trash2 } from "lucide-react";
 import { cn } from "../lib/utils";
 
 interface SidebarProps {
@@ -11,11 +11,12 @@ interface SidebarProps {
   categories: Category[];
   onAddProject?: () => void;
   onEditProject?: (project: Project) => void;
+  onDeleteProject?: (project: Project) => void;
   onDropEntry?: (entryId: string, projectId: string) => void;
   trackerStatus?: TrackerStatus;
 }
 
-export function Sidebar({ currentTab, setCurrentTab, projects, categories, onAddProject, onEditProject, onDropEntry, trackerStatus }: SidebarProps) {
+export function Sidebar({ currentTab, setCurrentTab, projects, categories, onAddProject, onEditProject, onDeleteProject, onDropEntry, trackerStatus }: SidebarProps) {
   const [dragOverProjectId, setDragOverProjectId] = useState<string | null>(null);
   const statusState = trackerStatus?.state ?? "stopped";
   const statusColor = statusState === "running" ? "bg-green-500" : statusState === "permission_required" ? "bg-amber-500" : "bg-red-500";
@@ -35,12 +36,12 @@ export function Sidebar({ currentTab, setCurrentTab, projects, categories, onAdd
       <div className="p-6 mb-4">
         <div className="flex items-center gap-2 mb-1">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white shadow-sm">
-            T
+            M
           </div>
-          <span className="font-bold text-lg text-[#E2E8F0]">Timing Web</span>
+          <span className="font-bold text-lg text-[#E2E8F0]">Time is Gold</span>
         </div>
         <div className="text-[10px] bg-[#252A34] px-2 py-0.5 rounded text-[#94A3B8] font-mono inline-block mt-2">
-          TAURI 2.0 • RUST
+          by klwj
         </div>
       </div>
 
@@ -119,13 +120,20 @@ export function Sidebar({ currentTab, setCurrentTab, projects, categories, onAdd
                     <span className="truncate">{project.name}</span>
                   </div>
                   
-                  <div className="relative group/icon flex items-center gap-2 opacity-0 group-hover/project:opacity-100 transition-opacity">
+                  <div className="relative group/icon flex items-center gap-1.5 opacity-0 group-hover/project:opacity-100 transition-opacity">
                     <button 
                       onClick={(e) => { e.stopPropagation(); onEditProject?.(project); }}
                       className="text-slate-500 hover:text-[#E2E8F0] transition-colors"
                       title="Edit Project"
                     >
                       <Edit2 className="w-3.5 h-3.5" />
+                    </button>
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); onDeleteProject?.(project); }}
+                      className="text-slate-500 hover:text-red-400 transition-colors"
+                      title="Delete Project"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
                     </button>
                     <div className="relative flex items-center">
                       <Info className="w-4 h-4 text-slate-500 hover:text-[#E2E8F0] transition-colors" />
